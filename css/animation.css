@@ -1,0 +1,160 @@
+/* =========================================
+   ✨ EMERALD ANIMATIONS LIBRARY (ULTIMATE)
+   Centralized Keyframes & Motion Effects
+   ========================================= */
+
+/* 1. ENTRANCE ANIMATIONS (Masuk Layar) */
+
+/* Fade In Basic */
+.fade-in {
+    animation: fadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Slide Up (Untuk Kartu/Modal) */
+.slide-up {
+    animation: slideUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Pop In (Untuk Notifikasi/Winner Card) */
+.pop-in {
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Slide In Right (Untuk Toast/Sidebar) */
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(100%); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* 2. ATTENTION SEEKERS (Looping) */
+
+/* Pulse Red (Live Indicator) */
+@keyframes pulseRed {
+    0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+}
+
+/* Pulse Gold (Untuk Tombol Penting) */
+@keyframes pulseGold {
+    0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+
+/* Breathing Effect (Untuk Border Avatar) */
+@keyframes breathing {
+    0% { transform: scale(1); filter: drop-shadow(0 0 5px gold); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 0 15px gold); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 5px gold); }
+}
+
+/* Floating (Untuk Ikon/Partikel) */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+/* 3. SHINE & GLOW EFFECTS (Kemewahan) */
+
+/* Sheen (Kilatan Cahaya lewat) */
+/* Gunakan pada class .shiny::after */
+@keyframes sheen {
+    0% { left: -100%; }
+    20% { left: 100%; }
+    100% { left: 100%; }
+}
+
+/* Text Flow (Warna Teks Mengalir) */
+@keyframes textFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 4. LOADING SPINNERS */
+
+/* Diamond Spin (Logo Loading) */
+@keyframes spinDiamond {
+    0% { transform: rotate(45deg) scale(0.8); }
+    50% { transform: rotate(225deg) scale(1.2); }
+    100% { transform: rotate(405deg) scale(0.8); }
+}
+
+/* 5. INTERACTION FEEDBACK */
+
+/* Shake (Error Input) */
+.shake {
+    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* 6. BACKGROUND PARTICLES (Login/Register) */
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--gold-primary);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    20% { opacity: 0.8; }
+    80% { opacity: 0.5; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+/* 7. GLITCH EFFECT (404 Page) */
+@keyframes glitch-1 {
+    0% { clip-path: inset(20% 0 80% 0); }
+    20% { clip-path: inset(60% 0 10% 0); }
+    40% { clip-path: inset(40% 0 50% 0); }
+    60% { clip-path: inset(80% 0 5% 0); }
+    80% { clip-path: inset(10% 0 70% 0); }
+    100% { clip-path: inset(30% 0 20% 0); }
+}
+
+@keyframes glitch-2 {
+    0% { clip-path: inset(10% 0 60% 0); }
+    20% { clip-path: inset(80% 0 5% 0); }
+    40% { clip-path: inset(40% 0 30% 0); }
+    60% { clip-path: inset(10% 0 80% 0); }
+    80% { clip-path: inset(70% 0 10% 0); }
+    100% { clip-path: inset(20% 0 50% 0); }
+}
+
+/* UTILITY CLASSES UNTUK HTML */
+.anim-float { animation: float 6s ease-in-out infinite; }
+.anim-pulse-gold { animation: pulseGold 2s infinite; }
+.anim-shine { position: relative; overflow: hidden; }
+.anim-shine::after {
+    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: sheen 3s infinite;
+}

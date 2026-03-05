@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emerald Kingdom - The Ultimate Metaverse Auction</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Poppins:wght@500;600;700;800&family=Playfair+Display:wght@700;900&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/ranks.css">
+    <link rel="stylesheet" href="css/cosmetics.css">
+    
+    <style>
+        /* --- CSS FIX & UPDATES V3.0 (Langsung di sini agar fix gambar langsung jalan) --- */
+        
+        /* 1. LAYOUT SECTION BARU */
+        .section-header-row {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin-bottom: 25px; padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .sec-title { font-family: 'Playfair Display'; font-size: 2rem; color: white; margin: 0; }
+        .sec-subtitle { color: #888; font-size: 0.9rem; margin-top: 5px; }
+        .view-all { font-size: 0.85rem; color: var(--gold-primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* 2. FIX GAMBAR KEGEDEAN (CRITICAL FIX) */
+        .auction-card {
+            display: flex; flex-direction: column; height: 100%;
+            background: rgba(20,20,20,0.6); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; overflow: hidden; transition: transform 0.3s;
+        }
+        .auction-card:hover { transform: translateY(-5px); border-color: var(--gold-primary); }
+        
+        .card-image-box {
+            width: 100%;
+            height: 220px; /* TINGGI FIX */
+            position: relative;
+            background: #000;
+            overflow: hidden;
+        }
+        .card-image-box img {
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* Agar gambar tidak gepeng */
+            transition: transform 0.5s;
+        }
+        .auction-card:hover .card-image-box img { transform: scale(1.1); }
+
+        /* 3. LIVE VS REGULAR */
+        .live-tag-wrapper {
+            position: absolute; top: 10px; left: 10px; z-index: 5;
+            display: flex; align-items: center; gap: 5px;
+            background: rgba(0,0,0,0.8); padding: 4px 10px; border-radius: 4px;
+            border: 1px solid red;
+        }
+        .live-dot-anim { width: 8px; height: 8px; background: red; border-radius: 50%; animation: pulseRed 1s infinite; }
+        .narrator-badge {
+            position: absolute; bottom: 10px; left: 10px; right: 10px;
+            background: rgba(0, 0, 0, 0.8); color: #00ff88;
+            font-size: 0.75rem; padding: 5px 10px; border-radius: 4px;
+            font-family: monospace; backdrop-filter: blur(4px);
+            border-left: 2px solid #00ff88;
+        }
+
+        /* 4. NEWS SECTION DI HOME */
+        .home-news-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
+        }
+        .news-mini-card {
+            display: flex; gap: 15px; padding: 15px;
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px; transition: 0.3s;
+        }
+        .news-mini-card:hover { background: rgba(255,255,255,0.05); }
+        .news-thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 4px; }
+
+        /* 5. HERO V3 */
+        .hero-v3 {
+            height: 600px;
+            background: radial-gradient(circle at center, #051a10 0%, #000 80%);
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; position: relative;
+        }
+        .hero-video-bg {
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            background: url('https://images.unsplash.com/photo-1599643478518-17488fbbcd75?q=80&w=1920&auto=format&fit=crop') center/cover;
+            opacity: 0.2; filter: grayscale(100%);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="index.html" style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 1.8rem;">💎</span>
+                    <div style="line-height: 1;">
+                        <span style="display:block; font-family:'Cinzel'; font-size:1.2rem; color:white;">EMERALD</span>
+                        <span style="display:block; font-size:0.7rem; color:var(--gold-primary); letter-spacing:2px;">KINGDOM</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="search-box" style="display: none; @media (min-width: 768px) { display: block; }">
+                <input type="text" id="headerSearch" placeholder="Cari Koleksi..." onkeypress="handleSearch(event)">
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active text-gold">Beranda</a></li>
+                    <li><a href="rank-store.html">Store</a></li>
+                    <li><a href="museum.html">Museum</a></li>
+                    <li id="authLink"><a href="auth/login.html" class="btn-outline">Masuk / Daftar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-v3 fade-in">
+        <div class="hero-video-bg"></div>
+        <div class="container" style="position: relative; z-index: 10;">
+            <div style="margin-bottom: 20px; font-family: 'Cinzel'; color: var(--gold-primary); letter-spacing: 5px;">EST. 2025</div>
+            <h1 style="font-size: 4rem; line-height: 1.1; margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+                Where Legends <br><span class="text-gold">Are Crowned</span>
+            </h1>
+            
+            <div class="hero-stats glass-panel" style="display: inline-flex; gap: 40px; padding: 20px 40px; margin-top: 30px;">
+                <div class="stat-item">
+                    <h3 id="statLive" style="color: #ff4444;">0</h3>
+                    <p>Live Event</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="statUsers">0</h3>
+                    <p>Total Warga</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="statValuation" style="color: #00ff88;">Rp 0</h3>
+                    <p>Valuasi Pasar</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-container" style="padding-top: 60px;">
+        <div class="container">
+            <div class="section-header-row">
+                <div>
+                    <h2 class="sec-title" style="color: #ff4444; display: flex; align-items: center; gap: 10px;">
+                        <span class="live-dot-anim"></span> SEDANG LIVE
+                    </h2>
+                    <p class="sec-subtitle">Pelelangan langsung dengan Narator.</p>
+                </div>
+            </div>
+
+            <div id="liveGrid" class="auction-grid">
+                <div class="loading-text">Menghubungkan ke Studio...</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-container" style="background: rgba(255,255,255,0.02);">
+        <div class="container">
+            <div class="section-header-row">
+                <div>
+                    <h2 class="sec-title">Rekomendasi Harian</h2>
+                    <p class="sec-subtitle">Pilihan kurator untuk investasi terbaik hari ini.</p>
+                </div>
+                <a href="search.html?filter=hot" class="view-all">Lihat Semua →</a>
+            </div>
+
+            <div id="recommendationGrid" class="auction-grid">
+                </div>
+        </div>
+    </section>
+
+    <section class="section-container">
+        <div class="container">
+            <div class="section-header-row">
+                <div>
+                    <h2 class="sec-title text-gold">Koleksi Langka (VVIP)</h2>
+                    <p class="sec-subtitle">Hanya untuk para King dan Emperor.</p>
+                </div>
+                <a href="search.html?filter=vvip" class="view-all">Vault Access →</a>
+            </div>
+
+            <div id="rareGrid" class="auction-grid">
+                </div>
+        </div>
+    </section>
+
+    <section class="section-container" style="background: rgba(0,0,0,0.5);">
+        <div class="container">
+            <div class="section-header-row">
+                <h3 style="color:white;">🕰️ Arloji Mewah</h3>
+                <a href="category.html?cat=Arloji" class="view-all">More</a>
+            </div>
+            <div id="catWatchGrid" class="auction-grid" style="margin-bottom: 60px;"></div>
+
+            <div class="section-header-row">
+                <h3 style="color:white;">🏎️ Supercar & Yacht</h3>
+                <a href="category.html?cat=Kendaraan" class="view-all">More</a>
+            </div>
+            <div id="catCarGrid" class="auction-grid"></div>
+        </div>
+    </section>
+
+    <section class="section-container" style="border-top: 1px solid #333;">
+        <div class="container">
+            <div class="section-header-row">
+                <div>
+                    <h2 class="sec-title">The Emerald Gazette</h2>
+                    <p class="sec-subtitle">Berita terbaru dari pasar lelang.</p>
+                </div>
+                <a href="news.html" class="view-all">Baca Koran →</a>
+            </div>
+
+            <div class="home-news-grid">
+                <div class="news-mini-card">
+                    <img src="assets/images/items/island.jpg" class="news-thumb" onerror="this.src='https://via.placeholder.com/80'">
+                    <div>
+                        <h4 style="font-size: 1rem; margin-bottom: 5px;">Rekor Baru: Pulau Maldives Terjual</h4>
+                        <small style="color: #888;">Ekonomi • 2 Jam lalu</small>
+                    </div>
+                </div>
+                <div class="news-mini-card">
+                    <img src="assets/images/items/car.jpg" class="news-thumb" onerror="this.src='https://via.placeholder.com/80'">
+                    <div>
+                        <h4 style="font-size: 1rem; margin-bottom: 5px;">Ferrari 250 GTO Masuk Lelang?</h4>
+                        <small style="color: #888;">Otomotif • Hari ini</small>
+                    </div>
+                </div>
+                <div class="news-mini-card">
+                    <img src="assets/images/items/watch1.jpg" class="news-thumb" onerror="this.src='https://via.placeholder.com/80'">
+                    <div>
+                        <h4 style="font-size: 1rem; margin-bottom: 5px;">Tips Investasi Arloji Kuno</h4>
+                        <small style="color: #888;">Edukasi • Kemarin</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3 class="text-gold">EMERALD KINGDOM</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+                        Platform lelang metaverse nomor 1. Keamanan, Privasi, dan Prestise tanpa batas.
+                    </p>
+                </div>
+                <div>
+                    <h4>Navigasi</h4>
+                    <ul style="font-size: 0.9rem; color: #aaa; line-height: 2;">
+                        <li><a href="rank-store.html">Store & Rank</a></li>
+                        <li><a href="museum.html">Hall of Fame</a></li>
+                        <li><a href="help.html">Bantuan (Butler)</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Legal</h4>
+                    <ul style="font-size: 0.9rem; color: #aaa; line-height: 2;">
+                        <li><a href="legal.html">Syarat & Ketentuan</a></li>
+                        <li><a href="legal.html">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 50px; border-top: 1px solid #222; padding-top: 20px; font-size: 0.8rem; color: #444;">
+                &copy; 2025 Emerald Kingdom Corp. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/db.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/home.js"></script> <script>
+        // Script inline kecil untuk search header
+        function handleSearch(e) {
+            if (e.key === 'Enter') {
+                window.location.href = `search.html?q=${e.target.value}`;
+            }
+        }
+    </script>
+
+</body>
+</html>

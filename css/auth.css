@@ -1,0 +1,285 @@
+/* =========================================
+   🔐 EMERALD AUTH STYLES (Login/Register/Verify)
+   Theme: Royal Glass Gate
+   ========================================= */
+
+/* 1. LAYOUT HALAMAN AUTH */
+body.auth-body {
+    /* Background diambil dari main.css, tapi kita perkuat fokusnya ke tengah */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efek Partikel/Debu Emas di Background (Opsional, pemanis visual) */
+body.auth-body::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-image: radial-gradient(#d4af37 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.03;
+    animation: floatingParticles 60s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes floatingParticles {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 2. KARTU LOGIN (GLASS CARD) */
+.auth-card {
+    width: 100%;
+    max-width: 480px;
+    padding: 50px 40px;
+    
+    /* Efek Kaca Premium */
+    background: rgba(10, 20, 15, 0.6); /* Lebih gelap sedikit biar teks terbaca */
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    
+    border: 1px solid rgba(212, 175, 55, 0.3); /* Border Emas Transparan */
+    border-radius: 24px;
+    
+    /* Shadow berlapis untuk kedalaman 3D */
+    box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset; /* Inner glow tipis */
+    
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    
+    /* Animasi muncul */
+    animation: cardEntrance 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes cardEntrance {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Aksen Garis Emas di Atas Kartu */
+.auth-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+    box-shadow: 0 5px 15px var(--gold-primary);
+    border-radius: 0 0 10px 10px;
+}
+
+/* 3. TYPOGRAPHY HEADER */
+.auth-header { margin-bottom: 40px; }
+
+.auth-header h2 {
+    font-size: 2rem;
+    color: var(--gold-primary);
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.auth-header p {
+    color: #a0a0a0;
+    font-size: 0.95rem;
+    font-weight: 300;
+}
+
+/* 4. FORM INPUTS (Stylish Inputs) */
+.form-group {
+    margin-bottom: 25px;
+    text-align: left;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+/* Efek Fokus Input: Border menyala hijau emerald */
+.form-group input:focus {
+    background: rgba(0, 0, 0, 0.6);
+    border-color: var(--emerald-glow);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Placeholder warna redup */
+.form-group input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+/* Grid untuk form register (2 kolom) */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* 5. TOMBOL UTAMA (Ultimate Button) */
+.btn-auth {
+    width: 100%;
+    padding: 16px;
+    margin-top: 10px;
+    
+    background: linear-gradient(135deg, var(--emerald-dark), #032b1f);
+    border: 1px solid var(--emerald-light);
+    border-radius: 50px;
+    
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-auth:hover {
+    background: var(--gold-gradient);
+    color: #000;
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+    transform: translateY(-3px) scale(1.02);
+}
+
+/* 6. UPLOAD BOX (Register Page) */
+.upload-box {
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    background: rgba(0,0,0,0.2);
+}
+
+.upload-box:hover {
+    border-color: var(--gold-primary);
+    background: rgba(212, 175, 55, 0.05);
+}
+
+.upload-box input[type="file"] {
+    display: none; /* Sembunyikan input asli */
+}
+
+.upload-label {
+    color: #ccc;
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
+/* 7. FOOTER LINK */
+.auth-footer {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.auth-footer a {
+    color: var(--gold-primary);
+    font-weight: bold;
+    position: relative;
+}
+
+.auth-footer a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--gold-primary);
+    transition: width 0.3s;
+}
+
+.auth-footer a:hover::after { width: 100%; }
+
+/* 8. ANIMASI LOADING (DIAMOND SPINNER) - Untuk Halaman Verifikasi */
+.loader-container {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.loader-diamond {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--emerald-glow), var(--emerald-dark));
+    transform: rotate(45deg);
+    animation: pulseDiamond 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 30px var(--emerald-glow);
+    position: relative;
+    z-index: 2;
+}
+
+/* Efek cincin luar */
+.loader-diamond::after {
+    content: '';
+    position: absolute;
+    top: -10px; left: -10px; right: -10px; bottom: -10px;
+    border: 2px solid var(--gold-primary);
+    animation: spinRing 4s linear infinite;
+}
+
+@keyframes pulseDiamond {
+    0% { transform: rotate(45deg) scale(0.8); opacity: 0.8; }
+    50% { transform: rotate(45deg) scale(1.1); opacity: 1; box-shadow: 0 0 50px var(--emerald-glow); }
+    100% { transform: rotate(45deg) scale(0.8); opacity: 0.8; }
+}
+
+@keyframes spinRing {
+    0% { transform: rotate(0deg); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: rotate(180deg); opacity: 0; }
+}
+
+/* Progress Bar Mewah */
+.progress-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    margin-top: 30px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--gold-gradient);
+    border-radius: 10px;
+    box-shadow: 0 0 15px var(--gold-primary);
+    transition: width 3s cubic-bezier(0.22, 1, 0.36, 1); /* Easing yang smooth */
+}

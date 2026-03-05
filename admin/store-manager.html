@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Manager - Admin Panel</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/profile.css"> <style>
+        /* CSS Khusus Halaman Ini (Preview Area) */
+        .preview-box {
+            background: #0f0f0f;
+            border: 1px dashed #444;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+
+        .preview-box h4 { margin-bottom: 20px; color: #888; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; }
+
+        /* Override style profile.css sedikit untuk konteks admin */
+        .avatar-wrapper { margin: 0; transform: scale(1.2); } /* Perbesar preview */
+        
+        .stock-control {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #333;
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="admin-layout">
+        
+        <aside class="sidebar">
+            <div class="admin-logo">
+                <span style="font-size: 1.5rem;">💎</span> EMERALD<span class="text-gold">ADMIN</span>
+            </div>
+            
+            <nav class="admin-menu">
+                <a href="dashboard.html">📦 Input Barang Lelang</a>
+                <a href="#" class="active">🛍️ Kelola Toko & Kosmetik</a>
+                <a href="live-control.html">🎛️ Remote Live Control</a>
+                <a href="users.html">👥 Manajemen User</a>
+                <div style="height: 20px;"></div>
+                <a href="../rank-store.html" target="_blank" style="color: var(--emerald-glow);">👀 Lihat Toko (Front-End)</a>
+            </nav>
+
+            <div class="admin-profile-card">
+                <div class="admin-avatar">A</div>
+                <div>
+                    <div style="font-weight: bold; color: white;">Administrator</div>
+                    <div style="font-size: 0.8rem; color: #888;">Emperor Rank</div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content-area">
+            
+            <header class="top-bar">
+                <div>
+                    <h2>Manajemen Toko</h2>
+                    <p>Upload bingkai, efek visual, dan atur stok terbatas.</p>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                
+                <div class="admin-card">
+                    <form id="addStoreItemForm">
+                        
+                        <div class="form-group">
+                            <label>Nama Item</label>
+                            <input type="text" id="itemName" placeholder="Contoh: Bingkai Naga Emas" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tipe Item</label>
+                                <select id="itemType">
+                                    <option value="border">Bingkai Profil (Border)</option>
+                                    <option value="badge">Medali (Achievement)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Harga (IDR)</label>
+                                <input type="number" id="itemPrice" placeholder="50000000" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>File Gambar (PNG Transparan/GIF)</label>
+                            <input type="file" id="itemImg" accept="image/*" required>
+                            <small style="color:#666; font-size:0.8rem;">*Wajib background transparan agar foto user terlihat.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="checkLimited" style="width: 20px; height: 20px;">
+                                <span style="color: var(--gold-primary);">🔥 Jadikan Limited Edition?</span>
+                            </label>
+                            
+                            <div id="stockInputArea" class="stock-control">
+                                <label>Jumlah Stok Awal</label>
+                                <input type="number" id="itemStock" placeholder="Contoh: 10">
+                                <small style="color:#aaa;">*Item akan otomatis 'Sold Out' jika stok habis.</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Deskripsi Singkat</label>
+                            <textarea id="itemDesc" rows="2" placeholder="Deskripsi menarik untuk user..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-admin-action">SIMPAN KE TOKO</button>
+                    </form>
+                </div>
+
+                <div>
+                    <div class="admin-card">
+                        <div class="preview-box">
+                            <h4>Live Simulator</h4>
+                            
+                            <div class="avatar-wrapper">
+                                <img src="../assets/images/avatars/default.png" class="avatar-base">
+                                <img id="previewBorderDisplay" src="" class="avatar-border" style="display: none;">
+                            </div>
+
+                            <div style="margin-top: 30px;">
+                                <h3 id="previewName" style="color: white; font-size: 1.1rem;">Nama Item</h3>
+                                <p id="previewPrice" class="text-gold">Rp 0</p>
+                                <span id="previewStock" style="font-size: 0.8rem; background: #333; padding: 2px 8px; border-radius: 4px; display: none;">Limited: 10</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="margin-top: 40px;">
+                <h3>Daftar Item Aktif</h3>
+                <div class="admin-card" style="padding: 0; overflow: hidden;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Preview</th>
+                                <th>Nama Item</th>
+                                <th>Tipe</th>
+                                <th>Harga</th>
+                                <th>Stok</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="storeTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="../js/db.js"></script>
+    <script src="../js/admin-store.js"></script> </body>
+</html> 

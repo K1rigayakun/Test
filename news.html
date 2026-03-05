@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Emerald Gazette - Wawasan Sultan</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Poppins:wght@500;600;700&family=Playfair+Display:wght@700;900&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/news.css"> <style>
+        /* CSS TAMBAHAN V2 (TICKER & DYNAMIC SIDEBAR) */
+        
+        /* News Ticker */
+        .ticker-wrap {
+            background: #a00;
+            color: white;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            padding: 8px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            z-index: 20;
+            border-bottom: 1px solid #ff4444;
+        }
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 30s linear infinite;
+        }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* Market Watch Item (Sidebar) */
+        .market-item {
+            display: flex; gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+            transition: 0.3s;
+        }
+        .market-item:hover { transform: translateX(5px); }
+        
+        .market-thumb {
+            width: 70px; height: 70px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #444;
+        }
+        
+        .market-info h5 { font-family: 'Poppins'; font-size: 0.9rem; margin-bottom: 5px; line-height: 1.3; }
+        .market-info span { color: var(--gold-primary); font-weight: bold; font-size: 0.85rem; }
+        .market-badge { background: #333; color: #ccc; font-size: 0.6rem; padding: 2px 6px; border-radius: 3px; }
+
+        /* Newsletter Box */
+        .newsletter-box {
+            background: linear-gradient(135deg, #1a1a1a, #050505);
+            border: 1px solid var(--gold-dark);
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px;
+            margin-top: 40px;
+        }
+        .newsletter-input {
+            width: 100%; padding: 12px;
+            background: #000; border: 1px solid #444;
+            color: white; border-radius: 6px; margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ticker-wrap">
+        <div class="ticker-content">
+            MARKET UPDATE: Harga Emas naik 2.5% ▲ • Properti di Metaverse melonjak tajam • Lelang "Mahkota Raja" memecahkan rekor dunia • Kurs IDR stabil • Gabung menjadi VVIP untuk akses eksklusif •
+        </div>
+    </div>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo"><a href="index.html">💎 EMERALD</a></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Kembali ke Lobi</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="gazette-header fade-in">
+        <div class="container">
+            <div class="paper-meta">
+                <span id="displayDate">Senin, 1 Januari 2025</span>
+                <span class="edition">Vol. 99 - Edisi Cetak Terbatas</span>
+            </div>
+            
+            <h1 class="paper-title">THE EMERALD GAZETTE</h1>
+            
+            <div class="paper-divider">
+                <div class="line"></div><div class="diamond">♦</div><div class="line"></div>
+            </div>
+            <p class="paper-slogan">"Kurasi Gaya Hidup Tanpa Batas"</p>
+        </div>
+    </section>
+
+    <section class="section-container">
+        <div class="container news-grid-hero">
+            
+            <div class="main-column">
+                <article class="hero-article glass-panel fade-in">
+                    <div class="hero-img-box">
+                        <span class="category-tag">HEADLINE</span>
+                        <img src="assets/images/items/island.jpg" onerror="this.src='https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80'">
+                    </div>
+                    <div class="hero-content">
+                        <h2 class="article-title"><a href="#">Fenomena "Whale War": Saat Triliunan Rupiah Diperebutkan dalam 30 Detik</a></h2>
+                        <p class="article-excerpt">
+                            Analisis mendalam tentang psikologi lelang tingkat tinggi. Mengapa para Sultan rela mengeluarkan dana fantastis untuk aset digital? Psikolog kerajaan mengungkap fakta mengejutkan dibalik adrenalin 'Bid Button'.
+                        </p>
+                        <div class="article-footer">
+                            <span>Oleh: Sir Archibald</span>
+                            <span>10 min baca</span>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="latest-grid" style="margin-top: 40px;">
+                    <article class="news-card glass-panel fade-in">
+                        <div class="card-img-container">
+                            <img src="https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&w=500&q=60">
+                        </div>
+                        <div class="card-body">
+                            <small class="cat-label">INVESTASI</small>
+                            <h4><a href="#">Berlian vs Crypto: Mana Aset Safe Haven Terbaik 2025?</a></h4>
+                        </div>
+                    </article>
+                    <article class="news-card glass-panel fade-in">
+                        <div class="card-img-container">
+                            <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=500&q=60">
+                        </div>
+                        <div class="card-body">
+                            <small class="cat-label">OTOMOTIF</small>
+                            <h4><a href="#">Koleksi Hypercar Langka Mendarat di Gudang Emerald</a></h4>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <aside class="sidebar-news glass-panel fade-in">
+                <h3 class="sidebar-title text-gold">🔥 MARKET WATCH</h3>
+                <p style="font-size:0.8rem; color:#888; margin-bottom:20px;">Pantauan langsung barang terpanas di lantai lelang.</p>
+                
+                <div id="marketWatchList">
+                    <p style="text-align:center; padding:20px;">Memuat data pasar...</p>
+                </div>
+
+                <div class="newsletter-box">
+                    <h4 style="color:white;">Berlangganan Eksklusif</h4>
+                    <p style="font-size:0.8rem; color:#aaa;">Dapatkan katalog VVIP sebelum dirilis ke publik.</p>
+                    <form onsubmit="subscribeNews(event)">
+                        <input type="email" class="newsletter-input" placeholder="email@sultan.com" required>
+                        <button type="submit" class="btn-gold" style="width:100%; font-size:0.8rem;">GABUNG LIST</button>
+                    </form>
+                </div>
+            </aside>
+
+        </div>
+    </section>
+
+    <footer style="text-align:center; padding:50px 0; border-top:1px solid #222; color:#555;">
+        <p>The Emerald Gazette &copy; 2025. Divisi Publikasi Kerajaan.</p>
+    </footer>
+
+    <script src="js/db.js"></script>
+    <script src="js/global.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Set Tanggal
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('displayDate').innerText = new Date().toLocaleDateString('id-ID', options);
+
+            // 2. Render Market Watch (Data Realtime dari DB)
+            renderMarketWatch();
+        });
+
+        function renderMarketWatch() {
+            const items = KingdomDB.getItems();
+            const container = document.getElementById('marketWatchList');
+            
+            // Filter barang aktif & urutkan harga tertinggi
+            const activeItems = items
+                .filter(i => i.status === 'active')
+                .sort((a, b) => b.currentBid - a.currentBid)
+                .slice(0, 4); // Ambil Top 4
+
+            if (activeItems.length === 0) {
+                container.innerHTML = '<p style="color:#666; font-style:italic;">Pasar sedang tutup.</p>';
+                return;
+            }
+
+            container.innerHTML = ''; // Reset
+
+            activeItems.forEach(item => {
+                // Badge info
+                let badge = 'LIVE';
+                if(item.access === 'vvip') badge = 'VVIP';
+                else if(item.access === 'vip') badge = 'VIP';
+
+                const html = `
+                    <div class="market-item">
+                        <a href="auction-live.html?id=${item.id}">
+                            <img src="${item.image}" class="market-thumb" onerror="this.src='assets/images/items/placeholder.png'">
+                        </a>
+                        <div class="market-info">
+                            <span class="market-badge">${badge}</span>
+                            <h5><a href="auction-live.html?id=${item.id}" style="color:white; text-decoration:none;">${item.name}</a></h5>
+                            <span>${KingdomDB.formatRupiah(item.currentBid)}</span>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        function subscribeNews(e) {
+            e.preventDefault();
+            showToast("Terima kasih! Anda kini terdaftar di Royal Newsletter.", "gold");
+            e.target.reset();
+        }
+    </script>
+
+</body>
+</html>

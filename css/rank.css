@@ -1,0 +1,153 @@
+/* =========================================
+   ♟️ EMERALD RANK SYSTEM STYLES (ULTIMATE)
+   Hierarchy: Peasant -> Knight -> Noble -> Duke -> Royal -> King -> Emperor
+   ========================================= */
+
+/* 1. DEFINISI WARNA (PALET KASTA) */
+:root {
+    --rank-peasant: #7f8c8d;  /* Concrete Grey */
+    --rank-knight:  #cd7f32;  /* Bronze */
+    --rank-noble:   #bdc3c7;  /* Silver */
+    --rank-duke:    #ffd700;  /* Gold */
+    --rank-royal:   #9b59b6;  /* Amethyst Purple */
+    --rank-king:    #ff4500;  /* Ruby Red */
+    --rank-emperor: #00ff88;  /* Emerald Neon */
+}
+
+/* 2. TEXT COLORS & SHADOWS (Dipakai di Chat & Profil) */
+
+/* Tier 1: Rakyat Biasa */
+.rank-peasant { 
+    color: var(--rank-peasant) !important; 
+    font-weight: 500;
+}
+
+.rank-knight { 
+    color: var(--rank-knight) !important; 
+    font-weight: 600;
+}
+
+.rank-noble { 
+    color: var(--rank-noble) !important; 
+    font-weight: 600;
+    text-shadow: 0 0 5px rgba(189, 195, 199, 0.3);
+}
+
+/* Tier 2: Bangsawan (Glow Effect) */
+.rank-duke { 
+    color: var(--rank-duke) !important; 
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.rank-royal { 
+    color: var(--rank-royal) !important;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(155, 89, 182, 0.5);
+}
+
+/* Tier 3: Penguasa (Intense Glow + Animation) */
+.rank-king { 
+    color: var(--rank-king) !important;
+    font-weight: 800;
+    text-shadow: 0 0 15px rgba(255, 69, 0, 0.6);
+    letter-spacing: 0.5px;
+}
+
+.rank-emperor { 
+    color: var(--rank-emperor) !important;
+    font-weight: 900;
+    text-shadow: 0 0 20px rgba(0, 255, 136, 0.6), 0 0 40px rgba(0, 255, 136, 0.2);
+    letter-spacing: 1px;
+    animation: pulseRank 3s infinite alternate;
+}
+
+@keyframes pulseRank {
+    from { text-shadow: 0 0 20px rgba(0, 255, 136, 0.6); }
+    to { text-shadow: 0 0 30px rgba(0, 255, 136, 0.9), 0 0 10px white; }
+}
+
+/* 3. RANK BADGES (Kotak Kecil di Admin/Card) */
+.badge-rank {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    letter-spacing: 0.5px;
+}
+
+.badge-peasant { background: rgba(127, 140, 141, 0.1); border: 1px solid var(--rank-peasant); color: var(--rank-peasant); }
+.badge-knight  { background: rgba(205, 127, 50, 0.1);  border: 1px solid var(--rank-knight);  color: var(--rank-knight); }
+.badge-noble   { background: rgba(189, 195, 199, 0.1); border: 1px solid var(--rank-noble);   color: var(--rank-noble); }
+.badge-duke    { background: rgba(255, 215, 0, 0.1);   border: 1px solid var(--rank-duke);    color: var(--rank-duke); box-shadow: 0 0 5px rgba(255, 215, 0, 0.1); }
+.badge-royal   { background: rgba(155, 89, 182, 0.1);  border: 1px solid var(--rank-royal);   color: var(--rank-royal); box-shadow: 0 0 5px rgba(155, 89, 182, 0.1); }
+.badge-king    { background: rgba(255, 69, 0, 0.15);   border: 1px solid var(--rank-king);    color: var(--rank-king); box-shadow: 0 0 10px rgba(255, 69, 0, 0.2); }
+.badge-emperor { background: rgba(0, 255, 136, 0.15);  border: 1px solid var(--rank-emperor); color: var(--rank-emperor); box-shadow: 0 0 15px rgba(0, 255, 136, 0.3); }
+
+/* 4. STORE CARDS THEME (Warna Kartu di Toko) */
+/* CSS ini menimpa border-color di rank-store.html secara otomatis berdasarkan urutan */
+
+/* Peasant */
+.rank-card:nth-child(1) { border-top: 4px solid var(--rank-peasant); }
+
+/* Knight */
+.rank-card:nth-child(2) { border-top: 4px solid var(--rank-knight); }
+.rank-card:nth-child(2) .rank-title { color: var(--rank-knight); }
+
+/* Noble */
+.rank-card:nth-child(3) { border-top: 4px solid var(--rank-noble); }
+.rank-card:nth-child(3) .rank-title { color: var(--rank-noble); }
+
+/* Duke (Gold Theme) */
+.rank-card:nth-child(4) { 
+    border-top: 4px solid var(--rank-duke); 
+    background: linear-gradient(180deg, rgba(255, 215, 0, 0.05), rgba(20, 20, 20, 0.8));
+}
+.rank-card:nth-child(4) .rank-title { color: var(--rank-duke); text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+
+/* Royal (Purple Theme) */
+.rank-card:nth-child(5) { 
+    border-top: 4px solid var(--rank-royal); 
+    background: linear-gradient(180deg, rgba(155, 89, 182, 0.05), rgba(20, 20, 20, 0.8));
+}
+.rank-card:nth-child(5) .rank-title { color: var(--rank-royal); text-shadow: 0 0 10px rgba(155, 89, 182, 0.3); }
+
+/* King (Red Theme) */
+.rank-card:nth-child(6) { 
+    border-top: 4px solid var(--rank-king); 
+    background: linear-gradient(180deg, rgba(255, 69, 0, 0.1), rgba(20, 20, 20, 0.9));
+    transform: scale(1.02); /* Sedikit lebih besar */
+}
+.rank-card:nth-child(6) .rank-title { color: var(--rank-king); text-shadow: 0 0 15px rgba(255, 69, 0, 0.5); }
+
+/* Emperor (Emerald Theme - Ultimate) */
+.rank-card:nth-child(7) { 
+    border: 2px solid var(--rank-emperor);
+    background: radial-gradient(circle at center, rgba(0, 255, 136, 0.1) 0%, #000 100%);
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.15);
+    transform: scale(1.05); /* Paling menonjol */
+}
+.rank-card:nth-child(7) .rank-title { 
+    color: var(--rank-emperor);
+    text-shadow: 0 0 20px var(--rank-emperor);
+}
+.rank-card:nth-child(7) .rank-icon {
+    filter: drop-shadow(0 0 15px var(--rank-emperor));
+    animation: float 3s ease-in-out infinite;
+}
+
+/* 5. AVATAR GLOW (Efek Aura di Foto Profil) */
+/* Ditambahkan via JS ke elemen .avatar-base sesuai rank user */
+
+.glow-peasant { border-color: var(--rank-peasant); }
+.glow-knight  { border-color: var(--rank-knight); box-shadow: 0 0 10px rgba(205, 127, 50, 0.2); }
+.glow-noble   { border-color: var(--rank-noble); box-shadow: 0 0 15px rgba(189, 195, 199, 0.3); }
+.glow-duke    { border-color: var(--rank-duke); box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+.glow-royal   { border-color: var(--rank-royal); box-shadow: 0 0 20px rgba(155, 89, 182, 0.5); }
+.glow-king    { border-color: var(--rank-king); box-shadow: 0 0 25px rgba(255, 69, 0, 0.6); }
+.glow-emperor { 
+    border-color: var(--rank-emperor); 
+    box-shadow: 0 0 30px var(--rank-emperor), inset 0 0 10px var(--rank-emperor); 
+}

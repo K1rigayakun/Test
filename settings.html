@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan Akun - Emerald Kingdom</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/profile.css"> <style>
+        /* CSS KHUSUS SETTINGS V3 */
+        
+        /* Layout */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        /* Sidebar Nav */
+        .settings-nav {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            height: fit-content;
+        }
+        
+        .nav-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+            display: flex; align-items: center; gap: 10px;
+            color: #888;
+        }
+        .nav-item:hover { background: rgba(255,255,255,0.05); color: white; }
+        .nav-item.active { background: rgba(212, 175, 55, 0.1); color: var(--gold-primary); border-left: 3px solid var(--gold-primary); }
+
+        /* Content Area */
+        .settings-content {
+            animation: fadeIn 0.5s ease;
+        }
+
+        .setting-card {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Section Header */
+        .card-header {
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .card-header h3 { margin: 0; color: white; }
+        .card-header p { margin: 5px 0 0; color: #666; font-size: 0.9rem; }
+
+        /* Audio Mixer */
+        .range-group { margin-bottom: 20px; }
+        .range-label { display: flex; justify-content: space-between; margin-bottom: 8px; color: #ccc; }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: #333;
+            border-radius: 5px;
+            appearance: none;
+            border: none;
+            padding: 0;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 18px; height: 18px;
+            background: var(--gold-primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--gold-primary);
+        }
+
+        /* Security Logs */
+        .log-item {
+            display: flex; justify-content: space-between;
+            padding: 12px 0; border-bottom: 1px solid #222;
+            font-size: 0.9rem;
+        }
+        .log-device { color: white; font-weight: bold; }
+        .log-ip { font-family: 'Share Tech Mono'; color: #666; }
+        .log-status { color: #00ff88; font-size: 0.8rem; background: rgba(0,255,136,0.1); padding: 2px 6px; border-radius: 4px; }
+
+        /* Danger Zone */
+        .danger-box {
+            border: 1px solid #5a1010;
+            background: linear-gradient(145deg, #1a0505, #000);
+        }
+        .btn-danger {
+            background: transparent; border: 1px solid #ff4444; color: #ff4444;
+            padding: 10px 20px; border-radius: 6px; cursor: pointer; transition: 0.3s;
+        }
+        .btn-danger:hover { background: #ff4444; color: white; }
+
+        /* Export Data */
+        .data-preview {
+            background: #000; border: 1px solid #333;
+            padding: 15px; border-radius: 6px;
+            font-family: 'Share Tech Mono'; font-size: 0.8rem; color: #00ff88;
+            height: 100px; overflow-y: auto; margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .settings-grid { grid-template-columns: 1fr; }
+            .settings-nav { display: flex; overflow-x: auto; margin-bottom: 20px; border-radius: 0; border: none; border-bottom: 1px solid #333; background: transparent; }
+            .nav-item { white-space: nowrap; border-bottom: 3px solid transparent; border-left: none; border-radius: 0; }
+            .nav-item.active { border-left: none; border-bottom-color: var(--gold-primary); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo"><a href="index.html">💎 EMERALD</a></div>
+            <nav><ul><li><a href="profile.html">Kembali ke Profil</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="container section-container">
+        <h2 class="text-gold" style="text-align: center; margin-bottom: 10px;">PUSAT KONTROL</h2>
+        <p style="text-align: center; color: #888; margin-bottom: 40px;">Kelola privasi, keamanan, dan preferensi sistem.</p>
+
+        <div class="settings-grid">
+            
+            <aside class="settings-nav">
+                <div class="nav-item active" onclick="switchSetting('general')">⚙️ Umum</div>
+                <div class="nav-item" onclick="switchSetting('security')">🛡️ Keamanan</div>
+                <div class="nav-item" onclick="switchSetting('data')">💾 Data & Privasi</div>
+                <div class="nav-item" onclick="switchSetting('danger')" style="color: #ff4444;">⚠️ Zona Bahaya</div>
+            </aside>
+
+            <main id="settingContent">
+                
+                <div id="set-general" class="settings-content">
+                    <div class="setting-card glass-panel fade-in">
+                        <div class="card-header">
+                            <h3>Audio & Visual</h3>
+                            <p>Sesuaikan pengalaman indra Anda di dalam kerajaan.</p>
+                        </div>
+
+                        <div class="range-group">
+                            <div class="range-label">
+                                <span>Volume Efek Suara (SFX)</span>
+                                <span id="sfxVal">100%</span>
+                            </div>
+                            <input type="range" id="sfxRange" min="0" max="100" value="100" oninput="updateVolume('sfx')">
+                        </div>
+
+                        <div class="range-group">
+                            <div class="range-label">
+                                <span>Musik Latar (BGM)</span>
+                                <span id="bgmVal">50%</span>
+                            </div>
+                            <input type="range" id="bgmRange" min="0" max="100" value="50" oninput="updateVolume('bgm')">
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 30px; border-top: 1px solid #333; padding-top: 20px;">
+                            <div>
+                                <h4>Hemat Daya (Low Performance)</h4>
+                                <p style="font-size: 0.8rem; color: #666;">Matikan partikel dan animasi berat.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="toggleLowPerf" onchange="savePreference()"><span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="set-security" class="settings-content" style="display: none;">
+                    <div class="setting-card glass-panel fade-in">
+                        <div class="card-header">
+                            <h3>Ubah Kata Sandi</h3>
+                        </div>
+                        <form id="changePassForm">
+                            <div class="form-group">
+                                <label>Sandi Lama</label>
+                                <input type="password" id="oldPass" placeholder="••••••">
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div class="form-group">
+                                    <label>Sandi Baru</label>
+                                    <input type="password" id="newPass" placeholder="Min 6 karakter">
+                                </div>
+                                <div class="form-group">
+                                    <label>Konfirmasi</label>
+                                    <input type="password" id="confPass" placeholder="Ulangi sandi">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-gold">UPDATE SANDI</button>
+                        </form>
+                    </div>
+
+                    <div class="setting-card glass-panel fade-in">
+                        <div class="card-header">
+                            <h3>Riwayat Login</h3>
+                            <p>Aktivitas masuk terakhir akun Anda.</p>
+                        </div>
+                        <div class="log-list">
+                            <div class="log-item">
+                                <div>
+                                    <div class="log-device">Windows 10 • Chrome</div>
+                                    <div class="log-ip">Jakarta, ID • 114.124.xx.xx</div>
+                                </div>
+                                <span class="log-status">Saat Ini</span>
+                            </div>
+                            <div class="log-item">
+                                <div>
+                                    <div class="log-device">iPhone 14 • Safari</div>
+                                    <div class="log-ip">Surabaya, ID • 36.88.xx.xx</div>
+                                </div>
+                                <span style="color:#888; font-size:0.8rem;">Kemarin</span>
+                            </div>
+                        </div>
+                        <button class="btn-outline" style="margin-top: 20px; width: 100%;" onclick="alert('Semua sesi lain telah dikeluarkan.')">Log Out Perangkat Lain</button>
+                    </div>
+                </div>
+
+                <div id="set-data" class="settings-content" style="display: none;">
+                    <div class="setting-card glass-panel fade-in">
+                        <div class="card-header">
+                            <h3>Ekspor Data Akun</h3>
+                            <p>Unduh salinan data pribadi Anda sesuai regulasi GDPR.</p>
+                        </div>
+                        
+                        <div class="data-preview" id="jsonPreview">
+                            { "user": "loading...", "data": "encrypted" }
+                        </div>
+
+                        <button class="btn-gold" onclick="downloadUserData()">DOWNLOAD JSON</button>
+                    </div>
+                </div>
+
+                <div id="set-danger" class="settings-content" style="display: none;">
+                    <div class="setting-card glass-panel danger-box fade-in">
+                        <div class="card-header">
+                            <h3 style="color: #ff4444;">Zona Berbahaya</h3>
+                            <p>Tindakan di sini tidak dapat dibatalkan.</p>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <div>
+                                <h4 style="color: white;">Reset Pabrik (Hapus Data Lokal)</h4>
+                                <p style="font-size: 0.8rem; color: #aaa;">Menghapus cache browser dan data login.</p>
+                            </div>
+                            <button class="btn-danger" onclick="factoryReset()">RESET</button>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #5a1010; padding-top: 20px;">
+                            <div>
+                                <h4 style="color: white;">Hapus Akun Permanen</h4>
+                                <p style="font-size: 0.8rem; color: #aaa;">Menghapus user dari database server.</p>
+                            </div>
+                            <button class="btn-danger" style="background: #3a0000;" onclick="deleteAccount()">HAPUS AKUN</button>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="js/db.js"></script>
+    <script src="js/global.js"></script>
+    
+    <script>
+        let currentUser = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const session = JSON.parse(localStorage.getItem('kingdom_logged_in'));
+            if (!session) window.location.href = 'auth/login.html';
+            currentUser = KingdomDB.getUser(session.username);
+
+            // Load JSON Preview
+            document.getElementById('jsonPreview').innerText = JSON.stringify(currentUser, null, 2);
+
+            // Load Prefs
+            loadPreferences();
+        });
+
+        // --- TAB SWITCHER ---
+        function switchSetting(tabId) {
+            // Hide All
+            document.querySelectorAll('.settings-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+            // Show Target
+            document.getElementById('set-' + tabId).style.display = 'block';
+            
+            // Active Button Highlight
+            const items = document.querySelectorAll('.nav-item');
+            if(tabId === 'general') items[0].classList.add('active');
+            if(tabId === 'security') items[1].classList.add('active');
+            if(tabId === 'data') items[2].classList.add('active');
+            if(tabId === 'danger') items[3].classList.add('active');
+        }
+
+        // --- AUDIO MIXER ---
+        function updateVolume(type) {
+            const val = document.getElementById(type + 'Range').value;
+            document.getElementById(type + 'Val').innerText = val + '%';
+            // Simpan ke LocalStorage
+            localStorage.setItem('pref_' + type + '_volume', val);
+        }
+
+        function loadPreferences() {
+            const sfx = localStorage.getItem('pref_sfx_volume') || 100;
+            const bgm = localStorage.getItem('pref_bgm_volume') || 50;
+            
+            document.getElementById('sfxRange').value = sfx;
+            document.getElementById('sfxVal').innerText = sfx + '%';
+            
+            document.getElementById('bgmRange').value = bgm;
+            document.getElementById('bgmVal').innerText = bgm + '%';
+        }
+
+        // --- SECURITY: CHANGE PASS ---
+        document.getElementById('changePassForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const old = document.getElementById('oldPass').value;
+            const newP = document.getElementById('newPass').value;
+            const conf = document.getElementById('confPass').value;
+
+            if (old !== currentUser.password) { showToast("Kata sandi lama salah!", "error"); return; }
+            if (newP.length < 6) { showToast("Minimal 6 karakter!", "error"); return; }
+            if (newP !== conf) { showToast("Konfirmasi sandi tidak cocok!", "error"); return; }
+
+            currentUser.password = newP;
+            KingdomDB.saveUser(currentUser);
+            showToast("Kata sandi berhasil diubah.", "success");
+            this.reset();
+        });
+
+        // --- DATA EXPORT ---
+        function downloadUserData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentUser));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", currentUser.username + "_data.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+            showToast("Data berhasil diunduh.", "success");
+        }
+
+        // --- DANGER ZONE ---
+        function factoryReset() {
+            if(confirm("⚠️ Reset Aplikasi ke pengaturan awal? Anda harus login ulang.")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
+        function deleteAccount() {
+            const input = prompt("Ketik 'DELETE' untuk menghapus akun Anda secara permanen:");
+            if (input === 'DELETE') {
+                let users = KingdomDB.getUsers();
+                users = users.filter(u => u.username !== currentUser.username);
+                localStorage.setItem('kingdom_users', JSON.stringify(users));
+                localStorage.removeItem('kingdom_logged_in');
+                alert("Akun dihapus. Selamat tinggal.");
+                window.location.href = 'index.html';
+            } else {
+                showToast("Penghapusan dibatalkan.", "info");
+            }
+        }
+    </script>
+
+</body>
+</html>
