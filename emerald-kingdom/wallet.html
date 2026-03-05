@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Treasury - Emerald Kingdom</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/wallet.css"> </head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo"><a href="index.html">💎 EMERALD</a></div>
+            <nav><ul><li><a href="profile.html">Kembali ke Profil</a></li></ul></nav>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="wallet-hero fade-in">
+            <div class="bank-card">
+                <div class="card-top">
+                    <div class="chip"></div>
+                    <div class="card-logo">ROYAL TREASURY</div>
+                </div>
+                
+                <div class="card-number">**** **** **** 8821</div>
+                
+                <div class="card-details">
+                    <div>
+                        <span class="card-label">Pemegang Kartu</span>
+                        <span class="card-value" id="cardHolderName">LOADING...</span>
+                    </div>
+                    <div class="card-balance">
+                        <span class="card-label">Saldo Efektif</span>
+                        <div class="balance-val" id="cardBalanceDisplay">Rp 0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="referral-badge" onclick="copyReferral()">
+                <span>🎟️ Kode Referral Anda: <strong id="myReferralCode">...</strong></span>
+                <span style="font-size: 0.8rem;">(Klik Salin)</span>
+            </div>
+        </div>
+
+        <div class="action-grid fade-in">
+            <div class="action-card" onclick="openModal('deposit')">
+                <span class="icon-large">⬇️</span>
+                <span class="action-title">Deposit</span>
+                <p class="action-desc">Top Up Saldo</p>
+            </div>
+            
+            <div class="action-card" onclick="openModal('withdraw')">
+                <span class="icon-large">⬆️</span>
+                <span class="action-title">Tarik Tunai</span>
+                <p class="action-desc">Cairkan Dana</p>
+            </div>
+
+            <div class="action-card" onclick="openModal('transfer')">
+                <span class="icon-large">💸</span>
+                <span class="action-title">Transfer</span>
+                <p class="action-desc">Kirim ke Teman</p>
+            </div>
+
+            <div class="action-card promo" onclick="openModal('voucher')">
+                <span class="icon-large">🎁</span>
+                <span class="action-title">Klaim Voucher</span>
+                <p class="action-desc">Kode Promo</p>
+            </div>
+        </div>
+
+        <section class="section-container glass-panel fade-in">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px;">
+                <h3 class="text-gold">📜 Mutasi Rekening</h3>
+                <small style="color: #666;">Menampilkan 50 transaksi terakhir</small>
+            </div>
+            
+            <div class="history-container">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Waktu</th>
+                            <th>Kategori</th>
+                            <th>Keterangan</th>
+                            <th>Nominal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mutationTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="transModal" class="modal">
+        <div class="modal-content glass-panel">
+            <span class="close-modal" onclick="closeTransModal()">&times;</span>
+            
+            <div style="margin-bottom: 30px;">
+                <div style="font-size: 3rem; margin-bottom: 10px;">💳</div>
+                <h3 id="modalTitle" class="text-gold">TRANSAKSI</h3>
+                <p style="color:#888; font-size:0.9rem;">Pilih metode atau nominal di bawah.</p>
+            </div>
+            
+            <div id="topupOptionsArea" style="display:none;">
+                <div class="action-grid" style="grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                    <div class="btn-topup-option" onclick="selectTopUp(this, 10000000)">
+                        <small style="color:#888;">STARTER</small>
+                        <span style="font-weight:bold; font-size:1.1rem;">10 Juta</span>
+                    </div>
+                    <div class="btn-topup-option" onclick="selectTopUp(this, 50000000)">
+                        <small style="color:#ccc;">NOBLE</small>
+                        <span style="font-weight:bold; font-size:1.1rem;">50 Juta</span>
+                    </div>
+                    <div class="btn-topup-option" onclick="selectTopUp(this, 100000000)" style="border-color:gold;">
+                        <small style="color:gold;">SULTAN</small>
+                        <span style="font-weight:bold; font-size:1.1rem;">100 Juta</span>
+                    </div>
+                    <div class="btn-topup-option" onclick="selectTopUp(this, 1000000000)" style="border-color:#00ff88;">
+                        <small style="color:#00ff88;">WHALE</small>
+                        <span style="font-weight:bold; font-size:1.1rem;">1 Miliar</span>
+                    </div>
+                </div>
+                <input type="hidden" id="selectedTopUpValue" value="0">
+            </div>
+
+            <div id="manualInputArea">
+                <div id="transferInputArea" style="display:none; margin-bottom:20px; text-align: left;">
+                    <label style="color:#aaa; font-size:0.9rem; display:block; margin-bottom:8px;">Username Penerima</label>
+                    <input type="text" id="transferTarget" placeholder="Contoh: sultan_budi" style="width:100%; padding:15px; background:#111; border:1px solid #333; color:white; border-radius:8px;">
+                </div>
+
+                <div id="voucherInputArea" style="display:none; margin-bottom:20px;">
+                    <input type="text" id="voucherCode" placeholder="MASUKKAN KODE" style="font-size:1.5rem; text-align:center; text-transform:uppercase; width:100%; padding:15px; background:#050505; border:2px dashed #444; color:white;">
+                </div>
+
+                <div id="amountInputWrapper">
+                    <p style="color:#aaa; margin-bottom:10px;">Nominal (IDR)</p>
+                    <input type="number" id="transAmount" class="money-input" placeholder="0">
+                </div>
+            </div>
+            
+            <button id="btnProcess" class="btn-confirm-action" onclick="processTransaction()">
+                PROSES SEKARANG ➤
+            </button>
+
+        </div>
+    </div>
+
+    <script src="js/db.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/wallet.js"></script>
+
+</body>
+</html>

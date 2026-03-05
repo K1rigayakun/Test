@@ -1,0 +1,169 @@
+/* =========================================
+   ✨ EMERALD COSMETICS LIBRARY (ULTIMATE)
+   Visual Effects, Animations, & Textures
+   ========================================= */
+
+/* --------------------------------------------------
+   1. RANK TEXT GLOW (Dipakai di Chat & Header User)
+   -------------------------------------------------- */
+
+/* Rank: Emperor (Emas Cair Mengalir) */
+.name-glow-gold {
+    font-weight: 900;
+    color: transparent;
+    background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: shineFlow 3s linear infinite;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+/* Rank: King (Api Membara) */
+.name-glow-fire {
+    font-weight: 800;
+    color: #ff4500;
+    text-shadow: 
+        0 -1px 2px #ffeb3b, 
+        0 -2px 5px #ff9800, 
+        0 -5px 10px #ff4500,
+        0 -8px 15px #ff0000;
+    animation: fireFlicker 2s infinite alternate;
+}
+
+/* Rank: Duke (Diamond / Cyan Neon) */
+.name-glow-diamond {
+    font-weight: 700;
+    color: #00ffff;
+    text-shadow: 
+        0 0 5px #00ffff,
+        0 0 10px #0088ff,
+        0 0 20px #0088ff;
+}
+
+/* Rank: Noble (Perak Mengkilap) */
+.name-glow-silver {
+    font-weight: 700;
+    color: #e0e0e0;
+    background: linear-gradient(to bottom, #fff 0%, #aaa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+/* --------------------------------------------------
+   2. CARD BADGES (Stiker Status Barang)
+   -------------------------------------------------- */
+
+/* Badge VVIP (Merah Mewah + Kilatan Cahaya) */
+.badge-vvip {
+    background: linear-gradient(135deg, #8b0000, #ff0000);
+    color: white;
+    border: 1px solid #ff5555;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Efek Kilatan (Sheen) lewat di atas badge */
+.badge-vvip::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -150%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+    transform: skewX(-20deg);
+    animation: sheen 3s infinite;
+}
+
+/* Badge VIP (Emas) */
+.badge-vip {
+    background: linear-gradient(135deg, #d4af37, #f2d06b);
+    color: black;
+    border: 1px solid #fff;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+    font-weight: 900;
+}
+
+/* --------------------------------------------------
+   3. AVATAR & BORDER EFFECTS
+   -------------------------------------------------- */
+
+/* Efek "Bernafas" (Membesar-mengecil halus) */
+.avatar-border.breathing {
+    animation: breathAnim 4s ease-in-out infinite;
+}
+
+/* Efek Berputar Pelan (Untuk border sci-fi) */
+.avatar-border.rotating {
+    animation: spinSlow 15s linear infinite;
+}
+
+/* --------------------------------------------------
+   4. TOAST NOTIFICATION COLORS
+   -------------------------------------------------- */
+
+.toast-gold {
+    background: linear-gradient(135deg, #1a1a00, #000);
+    border-left: 4px solid #ffd700;
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2);
+}
+
+.toast-success { border-left: 4px solid #00ff88; }
+.toast-error { border-left: 4px solid #ff4444; }
+
+/* --------------------------------------------------
+   5. KEYFRAME ANIMATIONS
+   -------------------------------------------------- */
+
+/* Animasi Teks Emas Mengalir */
+@keyframes shineFlow {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+/* Animasi Api */
+@keyframes fireFlicker {
+    0% { text-shadow: 0 -1px 2px #ffeb3b, 0 -2px 5px #ff9800, 0 -5px 10px #ff4500; }
+    50% { text-shadow: 0 -1px 2px #ffeb3b, 0 -3px 8px #ff9800, 0 -8px 20px #ff4500; }
+    100% { text-shadow: 0 -1px 2px #ffeb3b, 0 -2px 5px #ff9800, 0 -5px 10px #ff4500; }
+}
+
+/* Kilatan Cahaya Badge */
+@keyframes sheen {
+    0% { left: -150%; }
+    30% { left: 150%; } /* Cepat lewat */
+    100% { left: 150%; } /* Diam sebentar */
+}
+
+/* Nafas Border */
+@keyframes breathAnim {
+    0% { transform: scale(1); filter: drop-shadow(0 0 5px gold); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 0 15px gold); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 5px gold); }
+}
+
+/* Putar */
+@keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* --------------------------------------------------
+   6. SCROLLBAR MEWAH (Custom Webkit)
+   -------------------------------------------------- */
+/* Scrollbar khusus untuk Chat Box agar tidak merusak pemandangan */
+.chat-box::-webkit-scrollbar {
+    width: 6px;
+}
+.chat-box::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.3);
+}
+.chat-box::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #d4af37, #8a7018);
+    border-radius: 10px;
+}
+.chat-box::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+}

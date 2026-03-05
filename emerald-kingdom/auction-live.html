@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Auction - Emerald Kingdom</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auction.css">
+    <link rel="stylesheet" href="css/cosmetics.css">
+    <link rel="stylesheet" href="css/ranks.css"> <style>
+        /* CSS TAMBAHAN KHUSUS V2 (AUTO-BID & OVERLAYS) */
+        
+        /* Panel Auto-Bid Native */
+        #autoBidPanel {
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.1), rgba(0, 0, 0, 0.5));
+            border-left: 3px solid var(--emerald-glow);
+            padding: 15px;
+            margin-bottom: 15px;
+            display: none; /* Hidden by default toggled by JS */
+            animation: slideInRight 0.3s;
+        }
+
+        .ab-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .ab-title { font-family: 'Share Tech Mono'; color: var(--emerald-glow); font-weight: bold; }
+        
+        /* Tombol PDF Condition Report */
+        .btn-pdf {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #aaa;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+        .btn-pdf:hover { background: rgba(255,255,255,0.1); color: white; border-color: white; }
+
+        /* Overlay Pemenang yang Lebih Dramatis */
+        .winner-card {
+            background: radial-gradient(circle, #2a2a00 0%, #000 100%);
+            border: 2px solid var(--gold-primary);
+            padding: 40px 60px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 0 100px rgba(212, 175, 55, 0.5);
+            transform: scale(0.8);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popIn { to { transform: scale(1); } }
+
+        /* Security Guard V2 */
+        .lock-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: shake 0.5s;
+        }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+        /* Marquee Admin (Inject Area) */
+        #adminMarqueeArea {
+            position: absolute; top: 60px; left: 0; width: 100%; z-index: 90;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="room-body">
+
+    <div id="securityOverlay" class="security-lock" style="display:none;">
+        <div class="lock-content glass-panel">
+            <div class="lock-icon">🔒</div>
+            <h2 class="text-gold" style="font-size: 2rem; margin-bottom: 10px;">AKSES DITOLAK</h2>
+            <p style="font-size: 1.1rem; color: white;">Zona ini dilindungi Protokol Kerajaan.</p>
+            <div style="margin: 20px 0; padding: 15px; background: rgba(255,0,0,0.1); border: 1px solid #500;">
+                Dibutuhkan Rank: <strong id="requiredRankName" style="color: #ff4444;">DUKE</strong>
+            </div>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <a href="index.html" class="btn-outline">Kembali ke Lobi</a>
+                <a href="rank-store.html" class="btn-gold">Upgrade Rank</a>
+            </div>
+        </div>
+    </div>
+
+    <header class="room-header">
+        <a href="index.html" class="back-link">
+            <span>←</span> KEMBALI
+        </a>
+
+        <div class="live-status">
+            <span class="live-indicator"></span>
+            LIVE CHANNEL <span id="roomIdDisplay" class="text-gold">#...</span>
+        </div>
+
+        <div class="user-status-pill glass-panel">
+            <span id="userRankDisplay" style="font-weight: bold; font-size: 0.8rem;">...</span>
+            <div class="separator">|</div>
+            <span id="userSaldoDisplay" style="color: var(--emerald-glow); font-family: 'Share Tech Mono';">Rp ...</span>
+        </div>
+    </header>
+
+    <div id="adminMarqueeArea"></div>
+
+    <div class="room-grid">
+        
+        <main class="stream-area">
+            
+            <div class="video-stage glass-panel">
+                <div class="viewer-count">👁 <span id="viewCount">...</span> Sultan</div>
+                
+                <img id="itemImage" src="" alt="Live Item" class="stream-content">
+                
+                <div id="winnerOverlay" class="winner-overlay" style="display: none;">
+                    <div class="winner-card">
+                        <div style="font-size: 4rem;">🏆</div>
+                        <h2 class="text-gold">TERJUAL!</h2>
+                        <p>Harta ini resmi menjadi milik:</p>
+                        <h3 id="winnerName" class="name-glow-gold" style="font-size: 2rem; margin: 15px 0;">...</h3>
+                        <a href="index.html" class="btn-outline" style="margin-top: 20px;">Kembali ke Lobi</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-panel glass-panel">
+                <div class="item-meta">
+                    <h1 id="itemName" style="font-size: 1.5rem; margin-bottom: 5px;">Memuat...</h1>
+                    <p id="itemDesc" style="color: #888; font-size: 0.9rem;">...</p>
+                    
+                    <button class="btn-pdf" onclick="showToast('Mengunduh Sertifikat Keaslian...', 'info')">
+                        📄 Unduh Condition Report (PDF)
+                    </button>
+                </div>
+                
+                <div class="timer-box">
+                    <small style="color: #666; text-transform: uppercase; letter-spacing: 1px;">Sisa Waktu</small>
+                    <div id="countdownTimer" class="countdown-text">00:00:00</div>
+                </div>
+            </div>
+
+        </main>
+
+        <aside class="interaction-area">
+            
+            <div class="interaction-tabs">
+                <button class="active">Live Chat</button>
+                <button onclick="showToast('Fitur Riwayat Bid segera hadir.', 'info')">Riwayat</button>
+            </div>
+
+            <div class="chat-box" id="chatContainer">
+                <div class="chat-msg system">
+                    Selamat datang di Ruang Lelang VVIP. Harap menjaga etika bangsawan.
+                </div>
+                </div>
+
+            <div class="bidding-panel">
+                
+                <div id="autoBidPanel">
+                    <div class="ab-header">
+                        <span class="ab-title">🤖 AUTO-BID SYSTEM</span>
+                        <span style="cursor:pointer; color:#666;" onclick="toggleAutoBidUI(false)">✕</span>
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <input type="number" id="autoBidMax" placeholder="Limit Maksimal (Rp)" style="flex:1; background:#000; border:1px solid #333; color:white; padding:8px; border-radius:4px;">
+                        <button onclick="activateAutoBid()" style="background:var(--emerald-glow); color:black; border:none; padding:0 15px; border-radius:4px; font-weight:bold;">AKTIFKAN</button>
+                    </div>
+                </div>
+
+                <div class="current-bid-box">
+                    <small>Penawaran Tertinggi Saat Ini</small>
+                    <div class="price-big text-gold" id="currentPriceDisplay">Rp 0</div>
+                    <div class="holder-name">
+                        Oleh: <span id="highestBidderName" style="color: white; font-weight:bold;">-</span>
+                    </div>
+                </div>
+
+                <div class="bid-actions">
+                    <div style="text-align: center; margin-bottom: 5px;">
+                        <button onclick="toggleAutoBidUI(true)" style="background:none; border:none; color:#666; font-size:0.75rem; cursor:pointer; text-decoration:underline;">⚙️ Atur Strategi Auto-Bid</button>
+                    </div>
+
+                    <div class="quick-buttons">
+                        <button class="btn-quick" onclick="addBid(1000000)">+1 Jt</button>
+                        <button class="btn-quick" onclick="addBid(10000000)">+10 Jt</button>
+                        <button class="btn-quick" onclick="addBid(50000000)">+50 Jt</button>
+                    </div>
+                    
+                    <div class="input-row">
+                        <input type="number" id="customBidInput" placeholder="Input Manual...">
+                        <button class="btn-place-bid" onclick="submitBid()">TAWAR (BID)</button>
+                    </div>
+                </div>
+
+                <p class="fee-note" id="feeInfoText">Fee Transaksi berlaku.</p>
+            </div>
+
+        </aside>
+    </div>
+
+    <audio id="sfxCoin" src="assets/sounds/coin.mp3"></audio>
+    <audio id="sfxGavel" src="assets/sounds/gavel.mp3"></audio>
+    <audio id="sfxWin" src="assets/sounds/fanfare.mp3"></audio>
+
+    <script src="js/db.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/gamification.js"></script>
+    <script src="js/auction.js"></script>
+
+</body>
+</html>

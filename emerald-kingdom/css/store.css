@@ -1,0 +1,233 @@
+/* =========================================
+   🛍️ STORE STYLES (ULTIMATE V3.0)
+   Theme: Game Marketplace (Horizontal Scroll & Visual Stock)
+   ========================================= */
+
+/* 1. STICKY WALLET BAR (HUD Style) */
+.store-top-bar {
+    background: rgba(5, 10, 8, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 0;
+    position: sticky;
+    top: 70px; /* Di bawah Header Utama */
+    z-index: 80;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 5px 30px rgba(0,0,0,0.8);
+    transition: top 0.3s;
+}
+
+.wallet-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.balance-display {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.8rem;
+    color: var(--gold-primary);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+.btn-plus {
+    background: var(--emerald-glow);
+    color: black;
+    border: none;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 10px var(--emerald-glow);
+    transition: 0.3s;
+}
+.btn-plus:hover { transform: scale(1.1) rotate(90deg); background: white; }
+
+/* Voucher Mini Form (Header) */
+.voucher-mini-form {
+    display: flex;
+    gap: 10px;
+    background: rgba(255,255,255,0.05);
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.voucher-input {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    font-family: 'Share Tech Mono';
+    text-transform: uppercase;
+    width: 150px;
+    letter-spacing: 1px;
+}
+.voucher-input:focus { outline: none; }
+.voucher-input::placeholder { color: #555; }
+
+/* 2. RANK SHOWCASE (HORIZONTAL SCROLL) */
+.rank-showcase {
+    display: flex;
+    overflow-x: auto;
+    gap: 25px;
+    padding: 20px 5px 40px 5px; /* Padding bawah untuk shadow */
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: var(--gold-dark) #111;
+}
+
+/* Custom Scrollbar Chrome */
+.rank-showcase::-webkit-scrollbar { height: 8px; }
+.rank-showcase::-webkit-scrollbar-track { background: #111; border-radius: 4px; }
+.rank-showcase::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 4px; }
+.rank-showcase::-webkit-scrollbar-thumb:hover { background: var(--gold-primary); }
+
+/* Kartu Rank */
+.rank-card {
+    flex: 0 0 280px; /* Lebar Fix, tidak menyusut */
+    scroll-snap-align: center;
+    background: linear-gradient(145deg, #151515, #0a0a0a);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.rank-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    border-color: var(--gold-primary);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    z-index: 5;
+}
+
+/* Highlight VVIP */
+.rank-card.premium {
+    border: 1px solid var(--gold-dim);
+    background: linear-gradient(180deg, rgba(212, 175, 55, 0.05) 0%, #050505 100%);
+}
+
+.rank-icon {
+    width: 80px; height: 80px; margin: 0 auto 20px;
+    object-fit: contain; filter: drop-shadow(0 0 15px rgba(255,255,255,0.1));
+    transition: 0.5s;
+}
+.rank-card:hover .rank-icon { transform: scale(1.2) rotate(-10deg); }
+
+.rank-title { font-size: 1.4rem; margin-bottom: 5px; color: white; text-transform: uppercase; letter-spacing: 2px; }
+.rank-price { font-size: 1.2rem; color: var(--gold-primary); font-weight: 800; margin-bottom: 20px; font-family: 'Share Tech Mono'; }
+
+.rank-features {
+    list-style: none; margin-bottom: 20px; text-align: left;
+    background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px;
+    font-size: 0.85rem; color: #aaa;
+}
+.rank-features li { margin-bottom: 8px; display: flex; justify-content: space-between; }
+.rank-features li strong { color: white; }
+
+/* 3. COSMETIC GRID */
+.store-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.item-card {
+    background: #0f0f0f;
+    border: 1px solid #333;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: 0.3s;
+}
+
+.item-card:hover {
+    border-color: var(--emerald-glow);
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.1);
+    transform: translateY(-5px);
+}
+
+/* Badge Limited */
+.badge-limited {
+    position: absolute; top: 10px; left: 10px;
+    background: #ff4444; color: white;
+    font-size: 0.7rem; font-weight: 800; padding: 4px 8px;
+    border-radius: 4px; z-index: 5;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+/* Image Box */
+.item-preview-box {
+    height: 180px;
+    background: radial-gradient(circle, #1a1a1a, #000);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    border-bottom: 1px solid #222;
+    position: relative;
+}
+.item-img { width: 100%; height: 100%; object-fit: contain; transition: 0.3s; }
+.item-card:hover .item-img { transform: scale(1.1); filter: drop-shadow(0 0 10px var(--emerald-glow)); }
+
+/* Info & Stock Bar */
+.item-details { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+.item-name { font-weight: bold; color: white; margin-bottom: 5px; font-size: 1rem; }
+.item-desc { font-size: 0.8rem; color: #666; margin-bottom: 15px; line-height: 1.4; height: 2.8em; overflow: hidden; }
+
+/* Visual Stock Bar */
+.stock-bar-bg {
+    height: 6px; width: 100%; background: #222; border-radius: 3px;
+    overflow: hidden; margin-bottom: 5px;
+}
+.stock-bar-fill {
+    height: 100%; background: linear-gradient(90deg, #ff4444, #ff0000);
+    border-radius: 3px; box-shadow: 0 0 10px #ff0000;
+    transition: width 0.5s ease;
+}
+
+.item-price { 
+    font-size: 1.1rem; font-weight: bold; color: white; margin-top: 15px; 
+}
+
+/* Tombol Beli */
+.btn-buy {
+    width: 100%; padding: 12px; margin-top: 10px;
+    background: transparent; border: 1px solid var(--gold-primary); color: var(--gold-primary);
+    font-weight: 800; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;
+    border-radius: 6px; cursor: pointer; transition: 0.3s;
+}
+.btn-buy:hover { background: var(--gold-primary); color: black; box-shadow: 0 0 20px var(--gold-primary); }
+.btn-buy:disabled {
+    border-color: #333; color: #555; cursor: not-allowed; background: #111; box-shadow: none;
+}
+
+/* 4. TOP UP MODAL BUTTONS */
+.topup-options {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;
+}
+.btn-topup-option {
+    background: #1a1a1a; border: 1px solid #333; padding: 20px; border-radius: 8px;
+    color: white; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; gap: 5px;
+}
+.btn-topup-option small { font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+.btn-topup-option:hover { border-color: var(--emerald-glow); background: rgba(0, 255, 136, 0.05); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .store-top-bar { top: 0; position: relative; } /* Unstick di HP biar lega */
+    .wallet-flex { flex-direction: column; gap: 15px; align-items: stretch; }
+    .voucher-mini-form { width: 100%; }
+    .rank-showcase { padding-bottom: 20px; }
+    .cosmetic-grid { grid-template-columns: 1fr 1fr; }
+}
