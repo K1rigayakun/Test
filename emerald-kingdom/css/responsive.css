@@ -1,9 +1,0 @@
-@media (max-width: 900px) {
-    .admin-layout, .dashboard-grid, .room-grid { grid-template-columns: 1fr; }
-    .sidebar { display: none; }
-    .room-grid { height: auto; overflow-y: auto; }
-    .room-body { overflow-y: auto; height: auto; }
-    .interaction-area { height: 400px; }
-    .nav-container { flex-direction: column; gap: 15px; }
-    .hero-content h2 { font-size: 2rem; }
-}
